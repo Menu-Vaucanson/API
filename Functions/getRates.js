@@ -9,12 +9,17 @@ function getRates(req, res, localPath) {
 	}
 	const rates = JSON.parse(fs.readFileSync(localPath + `rates/${month}/${day}.json`));
 
-	let average = rates[0].rate;
+	let average = null;
+	if (rates.length) {
+		average = rates[0].rate;
+	}
 	rates.forEach((rate, i) => {
 		if (!i) return;
 		average += rate.rate;
 	});
-	average = (average / rates.length).toFixed(1);
+	if (average) {
+		average = (average / rates.length).toFixed(1);
+	}
 
 	res.status(200).json({ error: 0, rate: average });
 }
