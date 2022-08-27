@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const https = require('https');
+const fs = require('fs');
 const app = express();
 
 const { Month } = require('./Functions/Month');
@@ -7,8 +9,21 @@ const { Day } = require('./Functions/Day');
 const { Rate } = require('./Functions/Rate');
 const { getRates } = require('./Functions/getRates');
 
-// const localPath = '/home/pi/';
-const localPath = './';
+const localPath = '/home/pi/';
+// const localPath = './';
+
+const key = fs.readFileSync('../certs/selfsigned.key');
+const cert = fs.readFileSync('../certs/selfsigned.crt');
+const options = {
+  key: key,
+  cert: cert
+};
+
+const server = https.createServer(options, app);
+
+server.listen(8080, () => {
+  console.log('Server started !');
+});
 
 app.use(express.json());
 app.use(cors());
@@ -17,10 +32,6 @@ app.use((err, req, res, next) => {
 		return res.sendStatus(400);
 	}
 	next();
-});
-
-app.listen(8080, () => {
-	console.log('Server started');
 });
 
 app.get('/', (req, res) => {
