@@ -25,6 +25,15 @@ function Rate(req, res, localPath) {
 		return;
 	}
 
+	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`))?.date?.split('/');
+
+	const MenuDate = new Date(date[2], date[1] - 1, date[0], 11, 30, 0);
+
+	if (new Date() < MenuDate) {
+		res.status(400).json({ error: 1, msg: 'Rate refused' });
+		return;
+	}
+
 	const rate = req.body.rate;
 
 	if (typeof rate == 'undefined') {
