@@ -12,7 +12,6 @@ const { getRates } = require('./Functions/getRates');
 const { getRatesEvening } = require('./Functions/getRatesEvening');
 
 const localPath = '/home/pi/';
-// const localPath = './';
 
 const key = fs.readFileSync('../certs/selfsigned.key');
 const cert = fs.readFileSync('../certs/selfsigned.crt');
