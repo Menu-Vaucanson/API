@@ -6,6 +6,7 @@ const app = express();
 
 const { Month } = require('./Functions/Month');
 const { Day } = require('./Functions/Day');
+const { Days } = require('./Functions/Days');
 const { Rate } = require('./Functions/Rate');
 const { RateEvening } = require('./Functions/RateEvening');
 const { getRates } = require('./Functions/getRates');
@@ -41,6 +42,10 @@ app.get('/', (req, res) => {
 
 app.get('/menus', (req, res) => {
 	res.status(200).json({ error: 0, msg: 'To access a menu, get /menus/month/day/. To access all the month menus, get /menus/month' });
+});
+
+app.post('/menus', (req, res) => {
+	Days(req, res, localPath);
 });
 
 app.get('/menus/:month/:day', (req, res) => {
