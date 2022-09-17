@@ -2,5 +2,5 @@
 /node_modules/
 /menus/
 /rates/
-/Logs/
+/logs/
 *.http
