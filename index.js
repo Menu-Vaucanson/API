@@ -7,8 +7,8 @@ const app = express();
 const { Month } = require('./Functions/Month');
 const { Day } = require('./Functions/Day');
 const { Days } = require('./Functions/Days');
-const { Rate } = require('./Functions/Rate');
-const { RateEvening } = require('./Functions/RateEvening');
+const { rate } = require('./Functions/Rate');
+const { rateEvening } = require('./Functions/RateEvening');
 const { getRates } = require('./Functions/getRates');
 const { getRatesEvening } = require('./Functions/getRatesEvening');
 
@@ -57,7 +57,7 @@ app.get('/menus/:month', (req, res) => {
 });
 
 app.post('/rates/:month/:day', (req, res) => {
-	Rate(req, res, localPath);
+	rate(req, res, localPath);
 });
 
 app.get('/rates/:month/:day', (req, res) => {
@@ -65,7 +65,7 @@ app.get('/rates/:month/:day', (req, res) => {
 });
 
 app.post('/ratesEvening/:month/:day', (req, res) => {
-	RateEvening(req, res, localPath);
+	rateEvening(req, res, localPath);
 });
 
 app.get('/ratesEvening/:month/:day', (req, res) => {

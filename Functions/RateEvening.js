@@ -1,6 +1,8 @@
 const fs = require('fs');
 
-function RateEvening(req, res, localPath) {
+const { Rate } = require('./RateComp');
+
+function rateEvening(req, res, localPath) {
 	const month = parseInt(req.params.month);
 	const day = parseInt(req.params.day);
 
@@ -34,20 +36,18 @@ function RateEvening(req, res, localPath) {
 		return;
 	}
 
-	const rate = req.body.rate;
+	const r = req.body.rate;
 
-	if (typeof rate == 'undefined') {
+	if (typeof r == 'undefined') {
 		res.status(400).json({ error: 1, msg: 'No given rate' });
 		return;
 	}
 
-	Rates.push({
-		ip: ip,
-		rate: rate
-	});
+	const pc = req.body.pc;
+	Rates.push(new Rate(r, ip, pc));
 
 	fs.writeFileSync(localPath + `ratesEvening/${month}/${day}.json`, JSON.stringify(Rates));
 	res.status(200).json({ error: 0, msg: 'Success' });
 }
 
-module.exports = { RateEvening };
+module.exports = { rateEvening };
