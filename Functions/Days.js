@@ -1,16 +1,6 @@
 const fs = require('fs');
 
-function log(localPath, month, day) {
-	if (!fs.existsSync(localPath + `/Logs/${month}/`)) {
-		fs.mkdirSync(localPath + `/Logs/${month}/`);
-	}
-	if (!fs.existsSync(localPath + `/Logs/${month}/${day}.json`)) {
-		fs.writeFileSync(localPath + `/Logs/${month}/${day}.json`, JSON.stringify(0));
-	}
-	let count = JSON.parse(fs.readFileSync(localPath + `/Logs/${month}/${day}.json`));
-	count++;
-	fs.writeFileSync(localPath + `/Logs/${month}/${day}.json`, JSON.stringify(count));
-}
+const { log } = require('./Log');
 
 function Days(req, res, localPath) {
 	const days = req.body.days;
@@ -25,6 +15,7 @@ function Days(req, res, localPath) {
 		return;
 	}
 
+	log(localPath, days[0]?.month?.toString(), req);
 	const D = days.map((menu, i) => {
 		const day = menu?.day?.toString();
 		const month = menu?.month?.toString();
@@ -39,7 +30,6 @@ function Days(req, res, localPath) {
 		if (!fs.existsSync(localPath + `menus/${month}/${day}.json`)) {
 			return { error: 1, msg: 'Menu not found' };
 		} else {
-			log(localPath, month, day);
 			return { error: 0, data: JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`)) };
 		}
 	});
