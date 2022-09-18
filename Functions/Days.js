@@ -11,7 +11,7 @@ function Days(req, res, localPath) {
 	}
 
 	if (days.length > 14) {
-		res.status(400).json({ error: 1, msg: 'More than 14 days were requested.' });
+		res.status(413).json({ error: 1, msg: 'More than 14 days were requested' });
 		return;
 	}
 
@@ -21,10 +21,10 @@ function Days(req, res, localPath) {
 		const month = menu?.month?.toString();
 
 		if (typeof day == 'undefined') {
-			return { error: 1, msg: 'Day not specified for the ' + i + ' menu.' };
+			return { error: 1, msg: 'Day not specified for the ' + i + ' menu' };
 		}
 		if (typeof month == 'undefined') {
-			return { error: 1, msg: 'Month not specified for the ' + i + ' menu.' };
+			return { error: 1, msg: 'Month not specified for the ' + i + ' menu' };
 		}
 
 		if (!fs.existsSync(localPath + `menus/${month}/${day}.json`)) {
@@ -35,7 +35,7 @@ function Days(req, res, localPath) {
 	});
 
 	if (!D.length) {
-		res.status(400).json({ error: 1, msg: 'Invalid request.' });
+		res.status(400).json({ error: 1, msg: 'Invalid request' });
 		return;
 	}
 

@@ -7,7 +7,7 @@ function rate(req, res, localPath) {
 	const day = parseInt(req.params.day);
 
 	if (!fs.existsSync(localPath + `menus/${month}/${day}.json`)) {
-		res.status(400).json({ error: 1, msg: 'Menu not found' });
+		res.status(404).json({ error: 1, msg: 'Menu not found' });
 		return;
 	}
 
@@ -23,7 +23,7 @@ function rate(req, res, localPath) {
 	const Rates = JSON.parse(fs.readFileSync(localPath + `rates/${month}/${day}.json`));
 
 	if (typeof Rates.find(r => r.ip === ip) != 'undefined') {
-		res.status(400).json({ error: 1, msg: 'Rate refused' });
+		res.status(403).json({ error: 1, msg: 'Rate refused' });
 		return;
 	}
 
@@ -32,7 +32,7 @@ function rate(req, res, localPath) {
 	const MenuDate = new Date(date[2], date[1] - 1, date[0], 11, 30, 0);
 
 	if (new Date() < MenuDate) {
-		res.status(400).json({ error: 1, msg: 'Rate refused' });
+		res.status(403).json({ error: 1, msg: 'Rate refused' });
 		return;
 	}
 

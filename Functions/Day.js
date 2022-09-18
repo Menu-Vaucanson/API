@@ -7,7 +7,7 @@ function Day(req, res, localPath) {
 	const month = parseInt(req.params.month);
 	const day = parseInt(req.params.day);
 	if (!fs.existsSync(localPath + `menus/${month}/${day}.json`)) {
-		res.status(400).json({ error: 1, msg: 'Menu not found' });
+		res.status(404).json({ error: 1, msg: 'Menu not found' });
 		return;
 	}
 	const menu = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`));

@@ -3,7 +3,7 @@ const fs = require('fs');
 function Month(req, res, localPath) {
 	const month = parseInt(req.params.month);
 	if (!fs.existsSync(localPath + `menus/${month}/`)) {
-		res.status(400).json({ error: 1, msg: 'Month not found' });
+		res.status(404).json({ error: 1, msg: 'Month not found' });
 		return;
 	}
 	const menu = fs.readdirSync(localPath + `menus/${month}/`).map(m => {

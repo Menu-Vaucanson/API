@@ -4,7 +4,7 @@ function getRatesEvening(req, res, localPath) {
 	const month = parseInt(req.params.month);
 	const day = parseInt(req.params.day);
 	if (!fs.existsSync(localPath + `ratesEvening/${month}/${day}.json`)) {
-		res.status(400).json({ error: 1, msg: 'Rates not found' });
+		res.status(404).json({ error: 1, msg: 'Rates not found' });
 		return;
 	}
 	const rates = JSON.parse(fs.readFileSync(localPath + `ratesEvening/${month}/${day}.json`));
