@@ -15,7 +15,6 @@ function Days(req, res, localPath) {
 		return;
 	}
 
-	log(localPath, days[0]?.month?.toString(), req);
 	const D = days.map((menu, i) => {
 		const day = menu?.day?.toString();
 		const month = menu?.month?.toString();
@@ -29,9 +28,8 @@ function Days(req, res, localPath) {
 
 		if (!fs.existsSync(localPath + `menus/${month}/${day}.json`)) {
 			return { error: 1, msg: 'Menu not found' };
-		} else {
-			return { error: 0, data: JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`)) };
 		}
+		return { error: 0, data: JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`)) };
 	});
 
 	if (!D.length) {
@@ -40,6 +38,7 @@ function Days(req, res, localPath) {
 	}
 
 	res.status(200).json({ error: 0, data: D });
+	log(localPath, days[0]?.month?.toString(), req);
 }
 
 module.exports = { Days };

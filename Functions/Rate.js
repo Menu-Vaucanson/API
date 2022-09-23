@@ -29,7 +29,7 @@ function rate(req, res, localPath) {
 
 	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`))?.date?.split('/');
 
-	const MenuDate = new Date(date[2], date[1] - 1, date[0], 11, 30, 0);
+	const MenuDate = new Date(date[2], date[1] - 1, date[0], 11, 45, 0);
 
 	if (new Date() < MenuDate) {
 		res.status(403).json({ error: 1, msg: 'Rate refused' });
@@ -43,8 +43,7 @@ function rate(req, res, localPath) {
 		return;
 	}
 
-	const pc = req.body.pc;
-	Rates.push(new Rate(r, ip, pc));
+	Rates.push(new Rate(r, ip, req.body.pc));
 
 	fs.writeFileSync(localPath + `rates/${month}/${day}.json`, JSON.stringify(Rates));
 	res.status(200).json({ error: 0, msg: 'Success' });

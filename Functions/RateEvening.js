@@ -43,8 +43,7 @@ function rateEvening(req, res, localPath) {
 		return;
 	}
 
-	const pc = req.body.pc;
-	Rates.push(new Rate(r, ip, pc));
+	Rates.push(new Rate(r, ip, req.body.pc));
 
 	fs.writeFileSync(localPath + `ratesEvening/${month}/${day}.json`, JSON.stringify(Rates));
 	res.status(200).json({ error: 0, msg: 'Success' });

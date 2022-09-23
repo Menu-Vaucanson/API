@@ -13,8 +13,7 @@ function getRatesEvening(req, res, localPath) {
 	if (rates.length) {
 		average = rates[0].rate;
 	}
-	rates.forEach((rate, i) => {
-		if (!i) return;
+	rates.forEach(rate => {
 		average += rate.rate;
 	});
 	if (average) {
