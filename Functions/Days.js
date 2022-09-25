@@ -15,15 +15,24 @@ function Days(req, res, localPath) {
 		return;
 	}
 
-	const D = days.map((menu, i) => {
+	const D = days.map(menu => {
 		const day = menu?.day?.toString();
 		const month = menu?.month?.toString();
 
 		if (typeof day == 'undefined') {
-			return { error: 1, msg: 'Day not specified for the ' + i + ' menu' };
+			return { error: 1, msg: 'Day not specified for this menu' };
 		}
+
 		if (typeof month == 'undefined') {
-			return { error: 1, msg: 'Month not specified for the ' + i + ' menu' };
+			return { error: 1, msg: 'Month not specified for this menu' };
+		}
+
+		if (isNaN(day)) {
+			return { error: 1, msg: 'Invalid day specified for this menu' };
+		}
+
+		if (isNaN(month) || month > 13 || month < 0) {
+			return { error: 1, msg: 'Invalid month specified for this menu' };
 		}
 
 		if (!fs.existsSync(localPath + `menus/${month}/${day}.json`)) {
@@ -38,7 +47,10 @@ function Days(req, res, localPath) {
 	}
 
 	res.status(200).json({ error: 0, data: D });
-	log(localPath, days[0]?.month?.toString(), req);
+	const month = days[0]?.month?.toString();
+	if (month) {
+		log(localPath, month, req);
+	}
 }
 
 module.exports = { Days };
