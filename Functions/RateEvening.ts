@@ -11,6 +11,12 @@ function rateEvening(req: any, res: any, localPath: string) {
 		return;
 	}
 
+	const menu = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString());
+	if (!menu.evening) {
+		res.status(404).json({ error: 1, msg: 'Menu not found' });
+		return;
+	}
+
 	if (!fs.existsSync(localPath + `ratesEvening/${month}/${day}.json`)) {
 		if (!fs.existsSync(localPath + `ratesEvening/${month}`)) {
 			fs.mkdirSync(localPath + `ratesEvening/${month}`);
@@ -18,20 +24,26 @@ function rateEvening(req: any, res: any, localPath: string) {
 		fs.writeFileSync(localPath + `ratesEvening/${month}/${day}.json`, JSON.stringify([]));
 	}
 
+	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString())?.date?.split('/');
+
+	const MenuDate = new Date(date[2], date[1] - 1, date[0], 19, 0, 0);
+	const MenuMaxDate = new Date(MenuDate.getFullYear(), MenuDate.getMonth(), MenuDate.getDate() + 7);
+
+	if (new Date() < MenuDate) {
+		res.status(403).json({ error: 1, msg: 'Rate refused' });
+		return;
+	}
+
+	if (new Date() > MenuMaxDate) {
+		res.status(403).json({ error: 1, msg: 'Rate refused' });
+		return;
+	}
+
 	const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress).substring(7);
 
 	const Rates = JSON.parse(fs.readFileSync(localPath + `ratesEvening/${month}/${day}.json`).toString());
 
 	if (typeof Rates.find((r: any) => r.ip === ip) != 'undefined') {
-		res.status(403).json({ error: 1, msg: 'Rate refused' });
-		return;
-	}
-
-	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString())?.date?.split('/');
-
-	const MenuDate = new Date(date[2], date[1] - 1, date[0], 19, 0, 0);
-
-	if (new Date() < MenuDate) {
 		res.status(403).json({ error: 1, msg: 'Rate refused' });
 		return;
 	}

@@ -21,7 +21,7 @@ function rate(req: any, res: any, localPath: string) {
 	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString())?.date?.split('/');
 
 	const MenuDate = new Date(date[2], date[1] - 1, date[0], 11, 45, 0);
-	const MenuMaxDate = new Date(MenuDate.getFullYear(), MenuDate.getMonth(), MenuDate.getDate());
+	const MenuMaxDate = new Date(MenuDate.getFullYear(), MenuDate.getMonth(), MenuDate.getDate() + 7);
 
 	if (new Date() < MenuDate) {
 		res.status(403).json({ error: 1, msg: 'Rate refused' });

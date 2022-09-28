@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(cors());
 app.use((err: { status: number }, req: any, res: any, next: Function) => {
 	if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
-		return res.sendStatus(400).json({ error: 1, msg: 'Invalid body' });
+		return res.sendStatus(400);
 	}
 	next();
 });
