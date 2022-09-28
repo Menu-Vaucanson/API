@@ -1,8 +1,8 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const { log } = require('./Log');
+import log from './Log';
 
-function Days(req, res, localPath) {
+function Days(req: any, res: any, localPath: string) {
 	const days = req.body.days;
 
 	if (!days?.length) {
@@ -15,7 +15,7 @@ function Days(req, res, localPath) {
 		return;
 	}
 
-	const D = days.map(menu => {
+	const D = days.map((menu: any) => {
 		const day = menu?.day?.toString();
 		const month = menu?.month?.toString();
 
@@ -38,7 +38,7 @@ function Days(req, res, localPath) {
 		if (!fs.existsSync(localPath + `menus/${month}/${day}.json`)) {
 			return { error: 1, msg: 'Menu not found' };
 		}
-		return { error: 0, data: JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`)) };
+		return { error: 0, data: JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString()) };
 	});
 
 	if (!D.length) {
@@ -53,4 +53,4 @@ function Days(req, res, localPath) {
 	}
 }
 
-module.exports = { Days };
+export default Days;

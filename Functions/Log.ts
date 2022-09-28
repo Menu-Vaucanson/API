@@ -1,8 +1,11 @@
-const fs = require('fs');
-
+import fs from 'fs';
 
 class Log {
-	constructor(ip, request, pc) {
+	ip: string;
+	date: Date;
+	request: any;
+	pc: boolean;
+	constructor(ip: string, request: string, pc: boolean) {
 		this.ip = ip;
 		this.date = new Date();
 		this.request = request;
@@ -10,7 +13,7 @@ class Log {
 	}
 }
 
-function log(localPath, month, req) {
+function log(localPath: string, month: any, req: any) {
 	if (!fs.existsSync(localPath + `/logs/${month}.json`)) {
 		fs.writeFileSync(localPath + `/logs/${month}.json`, JSON.stringify([]));
 	}
@@ -19,10 +22,10 @@ function log(localPath, month, req) {
 	const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress).substring(7);
 	const request = req.body;
 
-	const infos = JSON.parse(fs.readFileSync(localPath + `/logs/${month}.json`));
+	const infos = JSON.parse(fs.readFileSync(localPath + `/logs/${month}.json`).toString());
 
 	infos.push(new Log(ip, request, pc));
 	fs.writeFileSync(localPath + `/logs/${month}.json`, JSON.stringify(infos));
 }
 
-module.exports = { log };
+export default log;
