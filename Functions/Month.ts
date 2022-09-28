@@ -1,6 +1,6 @@
-const fs = require('fs');
+import fs from 'fs';
 
-function Month(req, res, localPath) {
+function Month(req: any, res: any, localPath: string) {
 	const month = parseInt(req.params.month);
 	if (!fs.existsSync(localPath + `menus/${month}/`)) {
 		res.status(404).json({ error: 1, msg: 'Month not found' });
@@ -12,4 +12,4 @@ function Month(req, res, localPath) {
 	res.status(200).json({ error: 0, data: menu });
 }
 
-module.exports = { Month };
+export default Month;

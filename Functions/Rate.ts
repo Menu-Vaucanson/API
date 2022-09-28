@@ -1,8 +1,8 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const { Rate } = require('./RateComp');
+import Rate from './RateComp';
 
-function rate(req, res, localPath) {
+function rate(req: any, res: any, localPath: string) {
 	const month = parseInt(req.params.month);
 	const day = parseInt(req.params.day);
 
@@ -18,7 +18,7 @@ function rate(req, res, localPath) {
 		fs.writeFileSync(localPath + `rates/${month}/${day}.json`, JSON.stringify([]));
 	}
 
-	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`))?.date?.split('/');
+	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString())?.date?.split('/');
 
 	const MenuDate = new Date(date[2], date[1] - 1, date[0], 11, 45, 0);
 	const MenuMaxDate = new Date(MenuDate.getFullYear(), MenuDate.getMonth(), MenuDate.getDate());
@@ -35,9 +35,9 @@ function rate(req, res, localPath) {
 
 	const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress).substring(7);
 
-	const Rates = JSON.parse(fs.readFileSync(localPath + `rates/${month}/${day}.json`));
+	const Rates = JSON.parse(fs.readFileSync(localPath + `rates/${month}/${day}.json`).toString());
 
-	if (typeof Rates.find(r => r.ip === ip) != 'undefined') {
+	if (typeof Rates.find((r: any) => r.ip === ip) != 'undefined') {
 		res.status(403).json({ error: 1, msg: 'Rate refused' });
 		return;
 	}
@@ -55,4 +55,4 @@ function rate(req, res, localPath) {
 	res.status(200).json({ error: 0, msg: 'Success' });
 }
 
-module.exports = { rate };
+export default rate;

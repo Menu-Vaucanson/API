@@ -1,8 +1,8 @@
-const fs = require('fs');
+import fs from 'fs';
 
-const { Rate } = require('./RateComp');
+import Rate from './RateComp';
 
-function rateEvening(req, res, localPath) {
+function rateEvening(req: any, res: any, localPath: string) {
 	const month = parseInt(req.params.month);
 	const day = parseInt(req.params.day);
 
@@ -20,14 +20,14 @@ function rateEvening(req, res, localPath) {
 
 	const ip = (req.headers['x-forwarded-for'] || req.socket.remoteAddress).substring(7);
 
-	const Rates = JSON.parse(fs.readFileSync(localPath + `ratesEvening/${month}/${day}.json`));
+	const Rates = JSON.parse(fs.readFileSync(localPath + `ratesEvening/${month}/${day}.json`).toString());
 
-	if (typeof Rates.find(r => r.ip === ip) != 'undefined') {
+	if (typeof Rates.find((r: any) => r.ip === ip) != 'undefined') {
 		res.status(403).json({ error: 1, msg: 'Rate refused' });
 		return;
 	}
 
-	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`))?.date?.split('/');
+	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString())?.date?.split('/');
 
 	const MenuDate = new Date(date[2], date[1] - 1, date[0], 19, 0, 0);
 
@@ -49,4 +49,4 @@ function rateEvening(req, res, localPath) {
 	res.status(200).json({ error: 0, msg: 'Success' });
 }
 
-module.exports = { rateEvening };
+export default rateEvening;
