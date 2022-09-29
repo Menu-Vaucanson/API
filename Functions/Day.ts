@@ -12,7 +12,7 @@ function Day(req: any, res: any, localPath: string) {
 	}
 	const menu = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString());
 	res.status(200).json({ error: 0, data: menu });
-	log(localPath, month, req);
+	log(localPath, req);
 }
 
 export default Day;

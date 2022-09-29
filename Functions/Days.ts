@@ -49,7 +49,7 @@ function Days(req: any, res: any, localPath: string) {
 	res.status(200).json({ error: 0, data: D });
 	const month = days[0]?.month?.toString();
 	if (month) {
-		log(localPath, month, req);
+		log(localPath, req);
 	}
 }
 
