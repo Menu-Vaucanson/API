@@ -14,7 +14,7 @@ class Log {
 }
 
 function log(localPath: string, req: any) {
-	const month = new Date().getMonth();
+	const month = new Date().getMonth() + 1;
 	if (!fs.existsSync(localPath + `/logs/${month}.json`)) {
 		fs.writeFileSync(localPath + `/logs/${month}.json`, JSON.stringify([]));
 	}
