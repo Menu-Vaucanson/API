@@ -18,6 +18,18 @@ function rate(req: any, res: any, localPath: string) {
 		fs.writeFileSync(localPath + `rates/${month}/${day}.json`, JSON.stringify([]));
 	}
 
+	const r = req.body.rate;
+
+	if (typeof r == 'undefined') {
+		res.status(400).json({ error: 1, msg: 'No given rate' });
+		return;
+	}
+
+	if (r < 0 || r > 5) {
+		res.status(400).json({ error: 1, msg: 'Invalid rate' });
+		return;
+	}
+
 	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString())?.date?.split('/');
 
 	const MenuDate = new Date(date[2], date[1] - 1, date[0], 11, 45, 0);
@@ -39,13 +51,6 @@ function rate(req: any, res: any, localPath: string) {
 
 	if (typeof Rates.find((r: any) => r.ip === ip) != 'undefined') {
 		res.status(403).json({ error: 1, msg: 'Rate refused' });
-		return;
-	}
-
-	const r = req.body.rate;
-
-	if (typeof r == 'undefined') {
-		res.status(400).json({ error: 1, msg: 'No given rate' });
 		return;
 	}
 

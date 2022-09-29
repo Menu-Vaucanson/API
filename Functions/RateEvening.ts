@@ -10,6 +10,17 @@ function rateEvening(req: any, res: any, localPath: string) {
 		res.status(404).json({ error: 1, msg: 'Menu not found' });
 		return;
 	}
+	const r = req.body.rate;
+
+	if (typeof r == 'undefined') {
+		res.status(400).json({ error: 1, msg: 'No given rate' });
+		return;
+	}
+
+	if (r < 0 || r > 5) {
+		res.status(400).json({ error: 1, msg: 'Invalid rate' });
+		return;
+	}
 
 	const menu = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString());
 	if (!menu.evening) {
@@ -45,13 +56,6 @@ function rateEvening(req: any, res: any, localPath: string) {
 
 	if (typeof Rates.find((r: any) => r.ip === ip) != 'undefined') {
 		res.status(403).json({ error: 1, msg: 'Rate refused' });
-		return;
-	}
-
-	const r = req.body.rate;
-
-	if (typeof r == 'undefined') {
-		res.status(400).json({ error: 1, msg: 'No given rate' });
 		return;
 	}
 
