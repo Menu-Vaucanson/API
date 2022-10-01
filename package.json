@@ -1,7 +1,7 @@
 {
 	"name": "menu-vaucanson-server",
 	"version": "1.0.0",
-	"description": "The readonly server-side of the Menu Vaucanson project.",
+	"description": "The API of the Menu Vaucanson project.",
 	"main": "index.ts",
 	"scripts": {
 		"dev": "nodemon index.ts",
