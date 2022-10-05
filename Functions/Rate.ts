@@ -26,7 +26,7 @@ function rate(req: any, res: any, localPath: string) {
 	}
 
 	if (r < 0 || r > 5) {
-		res.status(400).json({ error: 1, msg: 'Invalid rate' });
+		res.status(400).json({ error: 1, msg: 'Invalid rate: It can only be between 1 and 5.' });
 		return;
 	}
 
@@ -36,12 +36,12 @@ function rate(req: any, res: any, localPath: string) {
 	const MenuMaxDate = new Date(MenuDate.getFullYear(), MenuDate.getMonth(), MenuDate.getDate() + 7);
 
 	if (new Date() < MenuDate) {
-		res.status(403).json({ error: 1, msg: 'Rate refused' });
+		res.status(403).json({ error: 1, msg: 'Rate refused: This rate is not available before the initial date.' });
 		return;
 	}
 
 	if (new Date() > MenuMaxDate) {
-		res.status(403).json({ error: 1, msg: 'Rate refused' });
+		res.status(403).json({ error: 1, msg: 'Rate refused: Rates can only be submitted up to 7 days after the original date.' });
 		return;
 	}
 

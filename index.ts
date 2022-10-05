@@ -7,7 +7,7 @@ const app = express();
 import Month from './Functions/Month';
 import Day from './Functions/Day';
 import Days from './Functions/Days';
-import rate from './Functions/Rate';
+import Rate from './Functions/Rate';
 import rateEvening from './Functions/RateEvening';
 import getRates from './Functions/getRates';
 import getRatesEvening from './Functions/getRatesEvening';
@@ -57,7 +57,7 @@ app.get('/menus/:month', (req: any, res: any) => {
 });
 
 app.post('/rates/:month/:day', (req: any, res: any) => {
-	rate(req, res, localPath);
+	Rate(req, res, localPath);
 });
 
 app.get('/rates/:month/:day', (req: any, res: any) => {
