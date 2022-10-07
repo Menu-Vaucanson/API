@@ -50,7 +50,7 @@ function rate(req: any, res: any, localPath: string) {
 	const Rates = JSON.parse(fs.readFileSync(localPath + `rates/${month}/${day}.json`).toString());
 
 	if (typeof Rates.find((r: any) => r.ip === ip) != 'undefined') {
-		res.status(403).json({ error: 1, msg: 'Rate refused' });
+		res.status(403).json({ error: 1, msg: 'Rate refused: You have already rate this one.' });
 		return;
 	}
 
