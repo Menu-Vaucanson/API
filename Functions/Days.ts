@@ -31,7 +31,7 @@ function Days(req: any, res: any, localPath: string) {
 			return { error: 1, msg: 'Invalid day specified for this menu' };
 		}
 
-		if (isNaN(month) || month > 12 || month < 0) {
+		if (isNaN(month) || month > 12 || month < 1) {
 			return { error: 1, msg: 'Invalid month specified for this menu' };
 		}
 
