@@ -1,16 +1,16 @@
-import express from 'express';
 import cors from 'cors';
-import https from 'https';
+import express from 'express';
 import fs from 'fs';
+import https from 'https';
 const app = express();
 
-import Month from './Functions/Month';
 import Day from './Functions/Day';
 import Days from './Functions/Days';
-import Rate from './Functions/Rate';
-import rateEvening from './Functions/RateEvening';
 import getRates from './Functions/getRates';
 import getRatesEvening from './Functions/getRatesEvening';
+import Month from './Functions/Month';
+import Rate from './Functions/Rate';
+import rateEvening from './Functions/RateEvening';
 
 const localPath = '/home/pi/datas/';
 
@@ -26,6 +26,7 @@ const server = https.createServer(options, app);
 server.listen(8080, () => {
 	console.log('Server started !');
 });
+
 
 app.use(express.json());
 app.use(cors());

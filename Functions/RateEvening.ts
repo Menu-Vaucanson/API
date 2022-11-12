@@ -46,7 +46,12 @@ function rateEvening(req: any, res: any, localPath: string) {
 		return;
 	}
 
-	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString())?.date?.split('/');
+	if (menu?.errorEvening) {
+		res.status(400).json({ error: 1, msg: 'This menu cannot be rated.' });
+		return;
+	}
+
+	const date = menu?.date?.split('/');
 
 	const MenuDate = new Date(date[2], date[1] - 1, date[0], 19, 0, 0);
 	const MenuMaxDate = new Date(MenuDate.getFullYear(), MenuDate.getMonth(), MenuDate.getDate() + 7);

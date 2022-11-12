@@ -40,7 +40,14 @@ function rate(req: any, res: any, localPath: string) {
 		return;
 	}
 
-	const date = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString())?.date?.split('/');
+	const menu = JSON.parse(fs.readFileSync(localPath + `menus/${month}/${day}.json`).toString());
+
+	if (menu?.error) {
+		res.status(400).json({ error: 1, msg: 'This menu cannot be rated.' });
+		return;
+	}
+
+	const date = menu?.date?.split('/') as Array<number>;
 
 	const MenuDate = new Date(date[2], date[1] - 1, date[0], 11, 45, 0);
 	const MenuMaxDate = new Date(MenuDate.getFullYear(), MenuDate.getMonth(), MenuDate.getDate() + 7);
