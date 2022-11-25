@@ -2,6 +2,15 @@ import fs from 'fs';
 
 import Rate from './RateComp';
 
+function ToJSDate(month: number) {
+	if (month === 12) {
+		return 0;
+	}
+
+	return month - 1;
+}
+
+
 function rate(req: any, res: any, localPath: string) {
 	const month = parseInt(req.params.month);
 	const day = parseInt(req.params.day);
@@ -49,7 +58,7 @@ function rate(req: any, res: any, localPath: string) {
 
 	const date = menu?.date?.split('/') as Array<number>;
 
-	const MenuDate = new Date(date[2], date[1] - 1, date[0], 11, 45, 0);
+	const MenuDate = new Date(date[2], ToJSDate(date[1]), date[0], 11, 45, 0);
 	const MenuMaxDate = new Date(MenuDate.getFullYear(), MenuDate.getMonth(), MenuDate.getDate() + 7);
 
 	if (new Date() < MenuDate) {
@@ -88,7 +97,7 @@ function rate(req: any, res: any, localPath: string) {
 
 	average += r;
 
-	average = parseFloat((average / rates.length + 1).toFixed(1));
+	average = parseFloat((average / (rates.length + 1)).toFixed(1));
 
 	res.status(200).json({ error: 0, msg: 'Success', rate: average });
 
