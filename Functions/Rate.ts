@@ -88,7 +88,7 @@ function rate(req: any, res: any, localPath: string) {
 
 	average += r;
 
-	average = parseFloat((average / rates.length + 1).toFixed(1));
+	average = parseFloat((average / (rates.length + 1)).toFixed(1));
 
 	res.status(200).json({ error: 0, msg: 'Success', rate: average });
 
