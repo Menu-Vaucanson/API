@@ -13,17 +13,8 @@ class Log {
 	}
 }
 
-function ToRealMonth(month: number) {
-	if (month === 0) {
-		return 12;
-	}
-
-	return month + 1;
-}
-
-
 function log(localPath: string, req: any) {
-	const month = ToRealMonth(new Date().getMonth());
+	const month = new Date().getMonth() + 1;
 	if (!fs.existsSync(localPath + `/logs/${month}.json`)) {
 		fs.writeFileSync(localPath + `/logs/${month}.json`, JSON.stringify([]));
 	}

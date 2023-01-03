@@ -2,14 +2,6 @@ import fs from 'fs';
 
 import Rate from './RateComp';
 
-function ToJSDate(month: number) {
-	if (month === 12) {
-		return 0;
-	}
-
-	return month - 1;
-}
-
 function rateEvening(req: any, res: any, localPath: string) {
 	const month = parseInt(req.params.month);
 	const day = parseInt(req.params.day);
@@ -61,7 +53,7 @@ function rateEvening(req: any, res: any, localPath: string) {
 
 	const date = menu?.date?.split('/');
 
-	const MenuDate = new Date(date[2], ToJSDate(date[1]), date[0], 19, 0, 0);
+	const MenuDate = new Date(date[2], date[1] - 1, date[0], 19, 0, 0);
 	const MenuMaxDate = new Date(MenuDate.getFullYear(), MenuDate.getMonth(), MenuDate.getDate() + 7);
 
 	if (new Date() < MenuDate) {
