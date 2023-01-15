@@ -1,4 +1,4 @@
-# Server
+# API
 
 This is the API of the Menu Vaucanson project.
 
